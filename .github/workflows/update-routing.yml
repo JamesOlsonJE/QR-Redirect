@@ -16,9 +16,12 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Download routing.json from SharePoint
+      - name: Test SharePoint link
         run: |
-          curl -L "https://janneyelectric.sharepoint.com/sites/JanneyElectric/Shared%20Documents/Fleet_WR_Routing_JSON/routing.json" -o routing.json
+          curl -L "https://janneyelectric.sharepoint.com/:u:/s/JanneyElectric/IQAVIVqqElDPTISsboDRWG-RAcXayHSjqukwrsJIXws9DAY" -o test_output.txt
+          echo "----- START -----"
+          head -n 20 test_output.txt
+          echo "----- END -----"
 
       - name: Commit if changed
         run: |
