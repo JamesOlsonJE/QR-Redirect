@@ -5,7 +5,7 @@
     const params = new URLSearchParams(window.location.search);
     const unit = params.get("unit");
 
-    fetch("routing.json")
+    fetch("routing.json?t=" + Date.now())
       .then(res => res.json())
       .then(data => {
         const row = data.find(r => r.Unit_ID === unit);
