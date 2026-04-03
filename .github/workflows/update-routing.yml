@@ -1,0 +1,27 @@
+name: Update routing.json
+
+on:
+  schedule:
+    - cron: "*/2 * * * *"
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download routing.json from SharePoint
+        run: |
+          curl -L "https://janneyelectric.sharepoint.com/sites/JanneyElectric/Shared%20Documents/Fleet_WR_Routing_JSON/routing.json" -o routing.json
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add routing.json
+          git diff --cached --quiet || git commit -m "Update routing.json"
+          git push
