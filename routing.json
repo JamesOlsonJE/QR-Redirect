@@ -1,0 +1,8 @@
+[
+  {
+    "Unit_ID": "TRK-101",
+    "Vehicle_Status": "ACTIVE",
+    "Active_URL": "https://example.com",
+    "Inactive_URL": "https://google.com"
+  }
+]
