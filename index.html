@@ -15,11 +15,15 @@
           return;
         }
 
-        if ((row.Vehicle_Status || "").toUpperCase().trim() === "ACTIVE") {
-          window.location.href = row.Active_URL;
-        } else {
-          window.location.href = row.Inactive_URL;
-        }
+        document.body.innerText =
+          "Unit=" + row.Unit_ID +
+          " | Status=" + row.Vehicle_Status +
+          " | Active_URL=" + row.Active_URL +
+          " | Inactive_URL=" + row.Inactive_URL;
+      })
+      .catch(err => {
+        document.body.innerText = "Error loading routing data";
+        console.error(err);
       });
   </script>
 </head>
