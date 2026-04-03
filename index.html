@@ -2,23 +2,28 @@
 <html>
 <head>
   <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-      const params = new URLSearchParams(window.location.search);
-      const unit = (params.get("unit") || "").toUpperCase().trim();
+    const params = new URLSearchParams(window.location.search);
+    const unit = (params.get("unit") || "").toUpperCase().trim();
 
-      document.body.innerText = "START | unit=" + unit;
+    fetch("routing.json?t=" + Date.now())
+      .then(res => res.json())
+      .then(data => {
+        const row = data.find(r => (r.Unit_ID || "").toUpperCase().trim() === unit);
 
-      try {
-        const res = await fetch("https://janneyelectric.sharepoint.com/sites/JanneyElectric/Shared%20Documents/Fleet_WR_Routing_JSON/routing.json?t=" + Date.now());
-        const text = await res.text();
+        if (!row) {
+          document.body.innerText = "Unit not found";
+          return;
+        }
 
-        document.body.innerText =
-          "FETCH OK\n\n" +
-          text.substring(0, 1000);
-      } catch (err) {
-        document.body.innerText = "FETCH ERROR\n\n" + err;
-      }
-    });
+        if ((row.Vehicle_Status || "").toUpperCase().trim() === "ACTIVE") {
+          window.location.href = row.Active_URL;
+        } else {
+          window.location.href = row.Inactive_URL;
+        }
+      })
+      .catch(() => {
+        document.body.innerText = "Error loading routing data";
+      });
   </script>
 </head>
 <body>
