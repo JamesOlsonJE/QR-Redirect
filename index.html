@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const unit = params.get("unit");
+
+    fetch("routing.json")
+      .then(res => res.json())
+      .then(data => {
+        const row = data.find(r => r.Unit_ID === unit);
+
+        if (!row) {
+          document.body.innerText = "Unit not found";
+          return;
+        }
+
+        if (row.Vehicle_Status === "ACTIVE") {
+          window.location.href = row.Active_URL;
+        } else {
+          window.location.href = row.Inactive_URL;
+        }
+      });
+  </script>
+</head>
+<body>
+Loading...
+</body>
+</html>
