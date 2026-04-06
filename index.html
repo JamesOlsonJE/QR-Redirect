@@ -3,7 +3,7 @@
 <head>
   <script>
     const params = new URLSearchParams(window.location.search);
-    const unit = (params.get("unit") || "").toUpperCase().trim();
+    const unit = (params.get("id") || "").toUpperCase().trim();
 
     fetch("routing.json?t=" + Date.now())
       .then(res => res.json())
