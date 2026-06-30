@@ -15,11 +15,12 @@
           return;
         }
 
-        if ((row.Vehicle_Status || "").toUpperCase().trim() === "ACTIVE") {
-          window.location.href = row.Active_URL;
-        } else {
-          window.location.href = row.Inactive_URL;
+        if (!row.Current_URL) {
+          document.body.innerText = "No route available";
+          return;
         }
+
+        window.location.href = row.Current_URL;
       })
       .catch(() => {
         document.body.innerText = "Error loading routing data";
